@@ -1,0 +1,74 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "financial-agent-atlas"
+version = "0.1.0"
+description = "基于 LangChain、MCP 与 Skills 的金融领域 Agent"
+readme = "README.md"
+requires-python = ">=3.11,<4.0"
+license = { text = "Educational use only" }
+authors = [{ name = "Financial Agent Atlas Contributors" }]
+dependencies = [
+    "baostock>=0.8.9",
+    "dashscope>=1.25.8",
+    "deepagents==0.3.6",
+    "exceptiongroup>=1.3.1",
+    "langchain>=1.2.6,<2.0",
+    "langchain-mcp-adapters>=0.2.1,<0.4",
+    "langchain-openai>=1.1.7,<2.0",
+    "mcp>=1.25.0,<2.0",
+    "nest-asyncio>=1.6.0",
+    "numpy>=2.4.2",
+    "pandas>=3.0.0",
+    "python-dotenv>=1.2.1",
+    "pyyaml>=6.0.3",
+    "requests>=2.32.5",
+    "rich>=14.2.0",
+    "tabulate>=0.9.0",
+    "tavily-python>=0.7.19",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0.2",
+    "pytest-asyncio>=1.3.0",
+    "pyyaml>=6.0.3",
+    "ruff>=0.14.0",
+]
+
+[project.scripts]
+financial-agent = "Financial_Agent.__main__:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["Financial_Agent*"]
+
+[tool.pytest.ini_options]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short --strict-markers"
+markers = [
+    "unit: 纯单元测试（不依赖外部服务）",
+    "mcp: MCP 协议集成测试",
+    "integration: 集成测试（可能需要本地进程）",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [".venv", "workspaces", "memories"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["B008"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
